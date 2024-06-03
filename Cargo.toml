@@ -4,5 +4,6 @@ version = "0.1.0"
 edition = "2021"
 description = "Vector-like container with fixed capacity, using options instead of stored length"
 license = "MIT"
+repository = "https://github.com/FlareFlo/opt_arrayvec"
 
 [dependencies]
