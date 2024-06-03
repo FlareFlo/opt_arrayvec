@@ -1,13 +1,13 @@
 use std::ops::{Index, IndexMut};
 use crate::OptArrayVec;
 
-impl<const CAP: usize, T> Default for OptArrayVec<CAP, T> {
+impl<T, const CAP: usize> Default for OptArrayVec<T, CAP> {
 	fn default() -> Self {
 		Self::new()
 	}
 }
 
-impl <const CAP: usize, T>FromIterator<T> for OptArrayVec<CAP, T> {
+impl <T, const CAP: usize>FromIterator<T> for OptArrayVec<T, CAP> {
 	/// Create a vec from an iterator.
 	///
 	/// # Panics
@@ -19,7 +19,7 @@ impl <const CAP: usize, T>FromIterator<T> for OptArrayVec<CAP, T> {
 	}
 }
 
-impl<const CAP: usize, T> Extend<T> for OptArrayVec<CAP, T> {
+impl<T, const CAP: usize> Extend<T> for OptArrayVec<T, CAP> {
 	/// Appends iterator to Self
 	///
 	/// # Panics
@@ -29,7 +29,7 @@ impl<const CAP: usize, T> Extend<T> for OptArrayVec<CAP, T> {
 	}
 }
 
-impl<const CAP: usize, T> Index<usize> for OptArrayVec<CAP, T> {
+impl<T, const CAP: usize> Index<usize> for OptArrayVec<T, CAP> {
 	type Output = T;
 
 	fn index(&self, index: usize) -> &Self::Output {
@@ -42,7 +42,7 @@ impl<const CAP: usize, T> Index<usize> for OptArrayVec<CAP, T> {
 	}
 }
 
-impl<const CAP: usize, T> IndexMut<usize> for OptArrayVec<CAP, T> {
+impl<T, const CAP: usize> IndexMut<usize> for OptArrayVec<T, CAP> {
 	fn index_mut(&mut self, index: usize) -> &mut Self::Output {
 		let mut len = 0;
 		for (i, elem) in self.inner.iter_mut().enumerate() {

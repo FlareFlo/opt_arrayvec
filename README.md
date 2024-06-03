@@ -4,4 +4,4 @@ A vector-like container that does not store its length directly, but rather retr
 I highly discourage using this if `size_of::<Yourtype> != size_of::<Option<Yourtype>>`
 
 # MSRV
-Currently, 1.59.0
+Currently,  1.58.1

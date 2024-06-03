@@ -13,6 +13,6 @@ pub mod into_iterator_impl;
 // It must either be filled with None, or start with a contiguous section of Some, followed exclusively by None.
 // Not covering this requirement means member functions will unexpectedly panic or produce UB in the future.
 #[derive(Debug, Copy, Clone)]
-pub struct OptArrayVec<const N: usize, T> {
+pub struct OptArrayVec<T, const N: usize> {
 	inner: [Option<T>; N],
 }

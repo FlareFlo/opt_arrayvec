@@ -1,14 +1,14 @@
 use std::ops::Index;
 use crate::OptArrayVec;
 
-pub struct Iter<'a, const CAP: usize, T> {
-	parent: &'a OptArrayVec<CAP, T>,
+pub struct Iter<'a, T, const CAP: usize> {
+	parent: &'a OptArrayVec<T, CAP>,
 	index: usize,
 	len: usize,
 }
 
-impl<const CAP: usize, T> OptArrayVec<CAP, T> {
-	pub fn iter(&self) -> Iter<CAP, T> {
+impl<T, const CAP: usize> OptArrayVec<T, CAP> {
+	pub fn iter(&self) -> Iter<T, CAP> {
 		Iter {
 			parent: self,
 			index: 0,
@@ -16,7 +16,7 @@ impl<const CAP: usize, T> OptArrayVec<CAP, T> {
 		}
 	}
 }
-impl<'a, const CAP: usize, T> Iterator for Iter<'a, CAP, T> {
+impl<'a, T, const CAP: usize> Iterator for Iter<'a, T, CAP> {
 	type Item = &'a T;
 	fn next(&mut self) -> Option<Self::Item> {
 		if self.index < self.len {

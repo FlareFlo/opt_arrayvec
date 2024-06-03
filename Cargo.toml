@@ -7,7 +7,7 @@ license = "MIT"
 authors = ["FlareFlo"]
 repository = "https://github.com/FlareFlo/opt_arrayvec"
 documentation = "https://docs.rs/opt_arrayvec"
-rust-version = "1.59.0"
+rust-version = " 1.58.1"
 keywords = ["stack", "vector", "array", "data-structure"]
 categories = ["data-structures"]
 

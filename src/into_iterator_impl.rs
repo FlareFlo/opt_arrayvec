@@ -1,13 +1,13 @@
 use crate::OptArrayVec;
 
-pub struct IntoIter<const CAP: usize, T> {
-	parent: OptArrayVec<CAP, T>,
+pub struct IntoIter<T, const CAP: usize> {
+	parent: OptArrayVec<T, CAP>,
 	index: usize,
 	len: usize,
 }
 
-impl<const CAP: usize, T> OptArrayVec<CAP, T> {
-	pub fn into_iter(self) -> IntoIter<CAP, T> {
+impl<T, const CAP: usize> OptArrayVec<T, CAP> {
+	pub fn into_iter(self) -> IntoIter<T, CAP> {
 		IntoIter {
 			len: self.len(),
 			parent: self,
@@ -15,7 +15,7 @@ impl<const CAP: usize, T> OptArrayVec<CAP, T> {
 		}
 	}
 }
-impl<const CAP: usize, T> Iterator for IntoIter<CAP, T> {
+impl<T, const CAP: usize> Iterator for IntoIter<T, CAP> {
 	type Item = T;
 	fn next(&mut self) -> Option<Self::Item> {
 		if self.index < self.len {
