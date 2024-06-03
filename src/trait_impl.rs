@@ -1,4 +1,4 @@
-use std::ops::Index;
+use std::ops::{Index, IndexMut};
 use crate::OptArrayVec;
 
 impl<const CAP: usize, T> Default for OptArrayVec<CAP, T> {
@@ -30,14 +30,27 @@ impl<const CAP: usize, T> Extend<T> for OptArrayVec<CAP, T> {
 }
 
 impl<const CAP: usize, T> Index<usize> for OptArrayVec<CAP, T> {
-	type Output = Option<T>;
+	type Output = T;
 
 	fn index(&self, index: usize) -> &Self::Output {
 		for (i, elem) in self.inner.iter().enumerate() {
 			if i == index {
-				return elem
+				return elem.as_ref().expect("Infallible")
 			}
 		}
-		&None
+		panic!("Index {index} out of bounds for length {}", self.len())
+	}
+}
+
+impl<const CAP: usize, T> IndexMut<usize> for OptArrayVec<CAP, T> {
+	fn index_mut(&mut self, index: usize) -> &mut Self::Output {
+		let mut len = 0;
+		for (i, elem) in self.inner.iter_mut().enumerate() {
+			if i == index {
+				return elem.as_mut().expect("Infallible")
+			}
+			len = index;
+		}
+		panic!("Index {index} out of bounds for length {}", len)
 	}
 }

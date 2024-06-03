@@ -22,7 +22,7 @@ impl<'a, const CAP: usize, T> Iterator for Iter<'a, CAP, T> {
 		if self.index < self.len {
 			let ret = self.parent.index(self.index);
 			self.index += 1;
-			ret.as_ref()
+			Some(ret)
 		} else {
 			None
 		}
