@@ -51,6 +51,6 @@ impl<const CAP: usize, T> IndexMut<usize> for OptArrayVec<CAP, T> {
 			}
 			len = index;
 		}
-		panic!("Index {index} out of bounds for length {}", len)
+		panic!("Index {index} out of bounds for length {len}")
 	}
 }

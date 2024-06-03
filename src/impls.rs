@@ -1,6 +1,8 @@
 use crate::OptArrayVec;
 
 impl<const CAP: usize, T> OptArrayVec<CAP, T> {
+
+	// Binds T, therefore must be in the global context, meaning it cannot be moved into Self::new
 	const ARRAY_REPEAT_VALUE: Option<T> = None;
 
 	pub fn cap(&self) -> usize {
@@ -8,7 +10,9 @@ impl<const CAP: usize, T> OptArrayVec<CAP, T> {
 	}
 
 	/// Amount of elements in the vec
-	/// Runs O(N) worst case
+	///
+	/// # Complexity
+	/// Runtime is O(CAP) worst case
 	pub fn len(&self) -> usize {
 		self.inner.iter().filter(|x| x.is_some()).count()
 	}
@@ -22,7 +26,7 @@ impl<const CAP: usize, T> OptArrayVec<CAP, T> {
 	}
 
 	/// Create a new empty vec
-	/// N must be provided for how many lements can be stored
+	/// CAP must be provided for how many elements can be stored
 	#[must_use]
 	pub const fn new() -> Self {
 		Self {
@@ -31,7 +35,9 @@ impl<const CAP: usize, T> OptArrayVec<CAP, T> {
 	}
 
 	/// Pushes new element at the back of the vec
-	/// Runs O(N) worst case
+	///
+	///  # Complexity
+	///  Runtime is O(CAP) worst case
 	///
 	///  # Panics
 	/// When the len == CAP
@@ -56,8 +62,8 @@ impl<const CAP: usize, T> OptArrayVec<CAP, T> {
 	pub fn pop(&mut self) -> Option<T> {
 		for i in (0..CAP).rev() {
 			let at = &mut self.inner[i];
-			if at.is_some() {
-				return at.take();
+			if let Some(val) = at.take() {
+				return Some(val);
 			}
 		}
 		None
