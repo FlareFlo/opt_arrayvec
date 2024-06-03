@@ -1,3 +1,4 @@
+use std::ops::Index;
 use crate::OptArrayVec;
 
 impl<const CAP: usize, T> Default for OptArrayVec<CAP, T> {
@@ -25,5 +26,18 @@ impl<const CAP: usize, T> Extend<T> for OptArrayVec<CAP, T> {
 	/// When the iterator yields more elements than there is remaining space
 	fn extend<I: IntoIterator<Item=T>>(&mut self, iter: I) {
 		iter.into_iter().for_each(|e|self.push(e));
+	}
+}
+
+impl<const CAP: usize, T> Index<usize> for OptArrayVec<CAP, T> {
+	type Output = Option<T>;
+
+	fn index(&self, index: usize) -> &Self::Output {
+		for (i, elem) in self.inner.iter().enumerate() {
+			if i == index {
+				return elem
+			}
+		}
+		&None
 	}
 }
