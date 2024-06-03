@@ -1,7 +1,7 @@
 use crate::OptArrayVec;
 
 pub struct Iter<'a, T> {
-	inner: std::slice::Iter<'a, Option<T>>,
+	inner: core::slice::Iter<'a, Option<T>>,
 }
 
 impl<T, const CAP: usize> OptArrayVec<T, CAP> {
@@ -13,8 +13,8 @@ impl<T, const CAP: usize> OptArrayVec<T, CAP> {
 }
 
 impl<'a, T, const CAP: usize> IntoIterator for &'a OptArrayVec<T, CAP> {
-	type Item = &'a T;
 	type IntoIter = Iter<'a, T>;
+	type Item = &'a T;
 
 	fn into_iter(self) -> Self::IntoIter {
 		self.iter()

@@ -1,7 +1,7 @@
 use crate::OptArrayVec;
 
 pub struct IntoIter<T, const CAP: usize> {
-	inner: std::array::IntoIter<Option<T>, CAP>,
+	inner: core::array::IntoIter<Option<T>, CAP>,
 }
 
 impl<T, const CAP: usize> IntoIterator for OptArrayVec<T, CAP> {

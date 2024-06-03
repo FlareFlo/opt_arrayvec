@@ -1,5 +1,6 @@
 #![warn(clippy::pedantic)]
 #![warn(rust_2018_idioms)]
+#![no_std]
 
 mod impls;
 pub mod into_iterator_impl;
