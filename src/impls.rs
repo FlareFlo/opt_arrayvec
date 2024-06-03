@@ -1,7 +1,6 @@
 use crate::OptArrayVec;
 
 impl<T, const CAP: usize> OptArrayVec<T, CAP> {
-
 	// Binds T, therefore must be in the global context, meaning it cannot be moved into Self::new
 	const ARRAY_REPEAT_VALUE: Option<T> = None;
 
