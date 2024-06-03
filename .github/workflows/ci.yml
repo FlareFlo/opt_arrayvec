@@ -26,10 +26,10 @@ jobs:
           tool: cargo-hack,cargo-minimal-versions
 
       - name: Install MSRV toolchain
-        run: rustup toolchain install 1.58.1
+        run: rustup toolchain install 1.65
 
       - name: Run Cargo test on MSRV
-        run: cargo +1.58.1 minimal-versions test
+        run: cargo +1.65 minimal-versions test
 
   clippy:
     runs-on: ubuntu-latest
@@ -46,7 +46,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Install Nightly toolchain
+        run: rustup toolchain install nightly
+
+      - name: Install Nightly rustfmt
+        run: rustup component add --toolchain nightly rustfmt
+
       - name: Run cargo format
         run: cargo +nightly fmt --check
-        env:
-          RUSTC_BOOTSTRAP: 1
