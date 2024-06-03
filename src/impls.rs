@@ -67,4 +67,9 @@ impl<const CAP: usize, T> OptArrayVec<CAP, T> {
 	pub fn into_inner(self) -> [Option<T>; CAP] {
 		self.inner
 	}
+
+	/// Returns capacity still remaining
+	pub fn remaining_capacity(&self) -> usize {
+		CAP - self.len()
+	}
 }
