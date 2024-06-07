@@ -5,6 +5,7 @@
 mod impls;
 mod into_iterator_impl;
 mod iterator_impl;
+mod macro_builder;
 #[cfg(test)]
 mod tests;
 mod trait_impl;
