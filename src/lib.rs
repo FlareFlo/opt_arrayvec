@@ -3,11 +3,14 @@
 #![no_std]
 
 mod impls;
-pub mod into_iterator_impl;
-pub mod iterator_impl;
+mod into_iterator_impl;
+mod iterator_impl;
 #[cfg(test)]
 mod tests;
 mod trait_impl;
+
+pub use into_iterator_impl::IntoIter;
+pub use iterator_impl::Iter;
 
 /// A vector-like container that does not store its length directly, but rather retrieves them through inner options
 /// I highly discourage using this if `size_of::<Yourtype>` != `size_of::<Option<Yourtype>>`
