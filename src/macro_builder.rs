@@ -11,14 +11,14 @@ macro_rules! arrayvec {
 		}
 		vec
 	}};
-	([$($value:expr),*], $cap:expr) => {{
+	($($value:expr),*; cap: $cap:expr) => {{
 		let mut vec: OptArrayVec<_, $cap> = $crate::OptArrayVec::new();
 		$(
 			vec.push($value);
 		)*
 		vec
 	}};
-	([$elem:expr; $n:expr], $cap:expr) => {{
+	($elem:expr; $n:expr; cap: $cap:expr) => {{
 		let mut vec: OptArrayVec<_, $cap> = $crate::OptArrayVec::new();
 		for _ in 0..$n {
 			vec.push($elem.clone())
@@ -51,7 +51,7 @@ mod test {
 
 	#[test]
 	fn splat_with_cap() {
-		let vec = arrayvec![[42; 13], 15];
+		let vec = arrayvec![42; 13; cap: 15];
 		assert_eq!(vec.len(), 13);
 	}
 
@@ -63,7 +63,13 @@ mod test {
 
 	#[test]
 	fn distinct_with_cap() {
-		let vec = arrayvec![[1, 2, 3, 4, 5], 6];
+		let vec = arrayvec![1, 2, 3, 4, 5; cap: 6];
 		assert_eq!(vec.len(), 5);
+	}
+
+	#[test]
+	fn arrays_with_cap() {
+		let vec = arrayvec![[3; 4]; 3; cap: 6];
+		assert_eq!(vec.len(), 3);
 	}
 }
