@@ -1,8 +1,6 @@
 #![warn(clippy::pedantic)]
 #![warn(rust_2018_idioms)]
-#![no_std]
-
-extern crate alloc;
+#![cfg_attr(not(feature = "std"), no_std)]
 
 mod impls;
 mod into_iterator_impl;

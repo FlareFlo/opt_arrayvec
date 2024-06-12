@@ -11,4 +11,8 @@ rust-version = "1.65"
 keywords = ["stack", "vector", "array", "data-structure"]
 categories = ["data-structures"]
 
+[features]
+default = ["std"]
+std = []
+
 [dependencies]
