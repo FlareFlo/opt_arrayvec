@@ -1,4 +1,3 @@
-use alloc::boxed::Box;
 use core::{
 	num::{
 		NonZeroI128,
@@ -57,7 +56,8 @@ where
 
 trait SafeDeref {}
 
-impl<U> SafeDeref for Box<U> where U: Sized {}
+#[cfg(feature = "std")]
+impl<U> SafeDeref for std::boxed::Box<U> where U: Sized {}
 
 impl<U> SafeDeref for &U where U: Sized {}
 
@@ -91,23 +91,32 @@ macro_rules! impl_nonzero {
 
 #[cfg(test)]
 mod test {
-	use alloc::boxed::Box;
-	use core::ops::Deref;
+	use core::{num::NonZeroU32, ops::Deref};
 
 	use crate::OptArrayVec;
 
 	#[test]
 	fn one() {
-		let vec: OptArrayVec<_, 5> = OptArrayVec::from_iter([Box::new(3)]);
+		let vec: OptArrayVec<_, 5> = OptArrayVec::from_iter([NonZeroU32::new(3).unwrap()]);
 		assert_eq!(vec.deref().len(), 1);
-		assert_eq!(vec.deref()[0].deref(), &3);
+		assert_eq!(vec.deref()[0].get(), 3);
 	}
 
 	#[test]
 	fn full() {
-		let vec: OptArrayVec<_, 3> =
-			OptArrayVec::from_iter([Box::new(3), Box::new(42), Box::new(100)]);
+		let vec: OptArrayVec<_, 3> = OptArrayVec::from_iter([
+			NonZeroU32::new(3).unwrap(),
+			NonZeroU32::new(42).unwrap(),
+			NonZeroU32::new(100).unwrap(),
+		]);
 		assert_eq!(vec.deref().len(), 3);
-		assert_eq!(vec.deref(), &[Box::new(3), Box::new(42), Box::new(100)]);
+		assert_eq!(
+			vec.deref(),
+			&[
+				NonZeroU32::new(3).unwrap(),
+				NonZeroU32::new(42).unwrap(),
+				NonZeroU32::new(100).unwrap()
+			]
+		);
 	}
 }
