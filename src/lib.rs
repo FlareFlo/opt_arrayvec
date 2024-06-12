@@ -2,12 +2,17 @@
 #![warn(rust_2018_idioms)]
 #![no_std]
 
+extern crate alloc;
+
 mod impls;
 mod into_iterator_impl;
 mod iterator_impl;
 #[cfg(test)]
 mod tests;
 mod trait_impl;
+
+/// Provides Deref<[T]> when T supports it
+mod array_deref;
 
 pub use into_iterator_impl::IntoIter;
 pub use iterator_impl::Iter;
