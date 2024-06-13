@@ -1,5 +1,3 @@
-use std::mem;
-
 use crate::OptArrayVec;
 
 impl<T, const CAP: usize> OptArrayVec<T, CAP> {
@@ -119,7 +117,7 @@ impl<T, const CAP: usize> OptArrayVec<T, CAP> {
 		}
 
 		let to_swap = self.get_mut(index)?;
-		mem::swap(&mut last, to_swap);
+		core::mem::swap(&mut last, to_swap);
 		Some(last)
 	}
 
