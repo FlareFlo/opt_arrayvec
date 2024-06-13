@@ -78,4 +78,33 @@ impl<T, const CAP: usize> OptArrayVec<T, CAP> {
 	pub fn remaining_capacity(&self) -> usize {
 		CAP - self.len()
 	}
+
+	/// Attempts to swap two elements
+	/// Returns error when one of the indices is out of bounds (either `Self::len()` or `Self::N`)
+	pub fn try_swap(&mut self, a: usize, b: usize) -> Option<()> {
+		// Perform bounds check
+		let _ = self.get(a)?;
+		let _ = self.get(b)?;
+
+		self.inner.swap(a, b);
+		Some(())
+	}
+
+	/// Swaps two elements
+	///
+	/// # Panics
+	/// When either index is out of bounds see. Use `Self::try_swap` for fallible swapping
+	pub fn swap(&mut self, a: usize, b: usize) {
+		self.try_swap(a, b).unwrap();
+	}
+
+	/// Attempts to get element at index
+	pub fn get(&self, index: usize) -> Option<&T> {
+		self.inner.get(index)?.as_ref()
+	}
+
+	/// Attempts to get mutable element at index
+	pub fn get_mut(&mut self, index: usize) -> Option<&mut T> {
+		self.inner.get_mut(index)?.as_mut()
+	}
 }
