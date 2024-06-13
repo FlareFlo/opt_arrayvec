@@ -1,3 +1,5 @@
+use std::mem;
+
 use crate::OptArrayVec;
 
 impl<T, const CAP: usize> OptArrayVec<T, CAP> {
@@ -106,5 +108,26 @@ impl<T, const CAP: usize> OptArrayVec<T, CAP> {
 	/// Attempts to get mutable element at index
 	pub fn get_mut(&mut self, index: usize) -> Option<&mut T> {
 		self.inner.get_mut(index)?.as_mut()
+	}
+
+	/// Takes value at index, replacing it with last element if any remains
+	pub fn try_swap_remove(&mut self, index: usize) -> Option<T> {
+		let mut last = self.pop()?;
+
+		if self.is_empty() {
+			return Some(last);
+		}
+
+		let to_swap = self.get_mut(index)?;
+		mem::swap(&mut last, to_swap);
+		Some(last)
+	}
+
+	/// Takes value at index, replacing it with last element if any remains
+	///
+	/// # Panics
+	/// When the index is out of bounds, or there is only one element remaining
+	pub fn swap_remove(&mut self, index: usize) -> T {
+		self.try_swap_remove(index).unwrap()
 	}
 }
